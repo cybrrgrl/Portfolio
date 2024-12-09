@@ -51,14 +51,47 @@ document.querySelectorAll('.link-item').forEach(link => {
 // Confirm button functionality
 confirmButton.addEventListener('click', () => {
     if (linkToOpen) {
-        window.open(linkToOpen, '_blank'); // Open the stored link
-        linkToOpen = null; // Reset the stored link
+        window.open(linkToOpen, '_blank'); // Open link
+        linkToOpen = null; // Reset the link
     }
     modal.style.display = 'none'; // Hide modal
 });
 
 // Cancel button functionality
 cancelButton.addEventListener('click', () => {
-    linkToOpen = null; // Reset the stored link
+    linkToOpen = null; // Reset the link
     modal.style.display = 'none'; // Hide modal
 });
+
+const carousel = document.querySelector('.carousel');
+const boxes = document.querySelectorAll('.box');
+const leftArrow = document.querySelector('.left-arrow');
+const rightArrow = document.querySelector('.right-arrow');
+
+let currentIndex = 0;
+
+// Function to show only the current box and hide others
+function updateCarousel() {
+    boxes.forEach((box, index) => {
+        box.style.display = index === currentIndex ? 'block' : 'none';
+    });
+}
+
+// Left box
+leftArrow.addEventListener('click', () => {
+    currentIndex = (currentIndex > 0) ? currentIndex - 1 : boxes.length - 1; // Go to previous box or loop back to the last box
+    updateCarousel();
+});
+
+// Right box
+rightArrow.addEventListener('click', () => {
+    currentIndex = (currentIndex < boxes.length - 1) ? currentIndex + 1 : 0; // Go to next box or loop back to the first box
+    updateCarousel();
+});
+
+// Initialize carousel on page load
+document.addEventListener('DOMContentLoaded', updateCarousel);
+
+
+
+
